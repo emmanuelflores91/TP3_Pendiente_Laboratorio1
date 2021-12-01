@@ -42,7 +42,7 @@ int employee_setId(Employee* this, int id)
 	int estado;
 	estado = -1;
 
-	if(this != NULL)
+	if(this != NULL && id > 0)
 	{
 		this->id = id;
 		estado = 0;
@@ -56,7 +56,7 @@ int employee_setNombre(Employee* this, char* nombre)
 	int estado;
 	estado = -1;
 
-	if (this != NULL)
+	if (this != NULL && nombre != NULL)
 	{
 		strcpy(this->nombre, nombre);
 		estado = 0;
@@ -70,7 +70,7 @@ int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas)
 	int estado;
 	estado = -1;
 
-	if (this != NULL)
+	if (this != NULL && horasTrabajadas >= 0)
 	{
 		this->horasTrabajadas = horasTrabajadas;
 		estado = 0;
@@ -84,7 +84,7 @@ int employee_setSueldo(Employee* this,int sueldo)
 	int estado;
 	estado = -1;
 
-	if (this != NULL)
+	if (this != NULL && sueldo >= 0)
 	{
 		this->sueldo = sueldo;
 		estado = 0;
@@ -98,7 +98,7 @@ int employee_getId(Employee* this,int* id)
 	int estado;
 	estado = -1;
 
-	if (this != NULL)
+	if (this != NULL && id != NULL)
 	{
 		*id = this->id;
 		estado = 0;
@@ -112,7 +112,7 @@ int employee_getNombre(Employee* this,char* nombre)
 	int estado;
 	estado = -1;
 
-	if (this != NULL)
+	if (this != NULL && nombre != NULL)
 	{
 		strcpy(nombre, this->nombre);
 		estado = 0;
@@ -127,7 +127,7 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
 	int estado;
 	estado = -1;
 
-	if (this != NULL)
+	if (this != NULL && horasTrabajadas != NULL)
 	{
 		*horasTrabajadas = this->horasTrabajadas;
 		estado = 0;
@@ -141,7 +141,7 @@ int employee_getSueldo(Employee* this,int* sueldo)
 	int estado;
 	estado = -1;
 
-	if (this != NULL)
+	if (this != NULL && sueldo != NULL)
 	{
 		*sueldo = this->sueldo;
 		estado = 0;
@@ -192,22 +192,24 @@ int HourCompare (void* empleadoA, void* empleadoB)
 	int horas1;
 	int horas2;
 
-
-	empleado1 = (Employee*) empleadoA;
-
-	empleado2 = (Employee*) empleadoB;
-
-	employee_getHorasTrabajadas(empleado1, &horas1);
-
-	employee_getHorasTrabajadas(empleado2, &horas2);
-
-	if (horas1 > horas2)
+	if(empleadoA != NULL && empleadoB != NULL)
 	{
-		estado = 1;
-	}
-	else if ( horas2 > horas1)
-	{
-		estado = -1;
+		empleado1 = (Employee*) empleadoA;
+
+		empleado2 = (Employee*) empleadoB;
+
+		employee_getHorasTrabajadas(empleado1, &horas1);
+
+		employee_getHorasTrabajadas(empleado2, &horas2);
+
+		if (horas1 > horas2)
+		{
+			estado = 1;
+		}
+		else if (horas2 > horas1)
+		{
+			estado = -1;
+		}
 	}
 
 	return estado;
@@ -223,25 +225,27 @@ int SalaryCompare (void* empleadoA, void* empleadoB)
 	int sueldo1;
 	int sueldo2;
 
-
-	empleado1 = (Employee*) empleadoA;
-
-	empleado2 = (Employee*) empleadoB;
-
-	employee_getSueldo(empleado1, &sueldo1);
-
-	employee_getSueldo(empleado2, &sueldo2);
-
-	if (sueldo1 > sueldo2)
+	if(empleadoA != NULL && empleadoB != NULL)
 	{
-		estado = 1;
-	}
-	else if ( sueldo2 > sueldo1)
-	{
-		estado = -1;
+		empleado1 = (Employee*) empleadoA;
+
+		empleado2 = (Employee*) empleadoB;
+
+		employee_getSueldo(empleado1, &sueldo1);
+
+		employee_getSueldo(empleado2, &sueldo2);
+
+		if (sueldo1 > sueldo2)
+		{
+			estado = 1;
+		}
+		else if ( sueldo2 > sueldo1)
+		{
+			estado = -1;
+		}
 	}
 
-	return estado;
+		return estado;
 
 }
 
@@ -254,23 +258,25 @@ int IdCompare (void* empleadoA, void* empleadoB)
 	int id1;
 	int id2;
 
-	empleado1 = (Employee*) empleadoA;
-
-	empleado2 = (Employee*) empleadoB;
-
-	employee_getId(empleado1, &id1);
-
-	employee_getId(empleado2, &id2);
-
-	if (id1 > id2)
+	if(empleadoA != NULL && empleadoB != NULL)
 	{
-		estado = 1;
-	}
-	else if ( id2 > id1)
-	{
-		estado = -1;
-	}
+		empleado1 = (Employee*) empleadoA;
 
+		empleado2 = (Employee*) empleadoB;
+
+		employee_getId(empleado1, &id1);
+
+		employee_getId(empleado2, &id2);
+
+		if (id1 > id2)
+		{
+			estado = 1;
+		}
+		else if ( id2 > id1)
+		{
+			estado = -1;
+		}
+	}
 	return estado;
 
 }
@@ -284,15 +290,18 @@ int NameCompare (void* empleadoA, void* empleadoB)
 	char name1[128];
 	char name2[128];
 
-	empleado1 = (Employee*) empleadoA;
+	if(empleadoA != NULL && empleadoB != NULL)
+	{
+		empleado1 = (Employee*) empleadoA;
 
-	empleado2 = (Employee*) empleadoB;
+		empleado2 = (Employee*) empleadoB;
 
-	employee_getNombre(empleado1, name1);
+		employee_getNombre(empleado1, name1);
 
-	employee_getNombre(empleado2, name2);
+		employee_getNombre(empleado2, name2);
 
-	estado = stricmp(name1, name2);
+		estado = stricmp(name1, name2);
+	}
 
 	return estado;
 }
